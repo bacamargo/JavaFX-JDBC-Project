@@ -3,12 +3,13 @@ package model.entities;
 import java.io.Serializable;
 
 public class Department implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String name;
 
     public Department() {
+
     }
 
     public Department(Integer id, String name) {
@@ -16,20 +17,20 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getId() {
+        return id;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -42,23 +43,28 @@ public class Department implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Department other = (Department) obj;
         if (id == null) {
-            if (other.id != null)
+            if (other.id != null) {
                 return false;
-        } else if (!id.equals(other.id))
+            }
+        } else if (!id.equals(other.id)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Department id: " + id + ", Name: " + name;
+        return "Department id " + id + ", Name: " + name;
     }
 }

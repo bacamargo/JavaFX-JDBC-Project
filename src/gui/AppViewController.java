@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
+import model.services.DepartmentService;
 
 public class AppViewController implements Initializable {
 
@@ -34,7 +35,7 @@ public class AppViewController implements Initializable {
 
     @FXML
     public void onMenuItemDepartmentAction() {
-        loadView("/gui/DepartmentList.fxml");
+        loadView2("/gui/DepartmentList.fxml");
     }
 
     @FXML
@@ -43,7 +44,7 @@ public class AppViewController implements Initializable {
     }
 
     @Override
-    public void initialize(URL uri, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {
 
     }
 
@@ -59,6 +60,28 @@ public class AppViewController implements Initializable {
             appVBox.getChildren().clear();
             appVBox.getChildren().add(appMenu);
             appVBox.getChildren().addAll(newVBox.getChildren());
+        } catch (IOException e) {
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+        }
+
+    }
+
+    private synchronized void loadView2(String absoluteName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            VBox newVBox = loader.load();
+
+            Scene appScene = App.getAppScene();
+            VBox appVBox = (VBox) ((ScrollPane) appScene.getRoot()).getContent();
+
+            Node appMenu = appVBox.getChildren().get(0);
+            appVBox.getChildren().clear();
+            appVBox.getChildren().add(appMenu);
+            appVBox.getChildren().addAll(newVBox.getChildren());
+
+            DepartmentListController controller = loader.getController();
+            controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
         }

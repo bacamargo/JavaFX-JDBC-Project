@@ -13,6 +13,8 @@ public class App extends Application {
         launch(args);
     }
 
+    private static Scene appScene;
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -22,12 +24,16 @@ public class App extends Application {
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
 
-            Scene appScene = new Scene(scrollPane);
+            appScene = new Scene(scrollPane);
             primaryStage.setScene(appScene);
             primaryStage.setTitle("Sample JavaFX application");
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Scene getAppScene() {
+        return appScene;
     }
 }
